@@ -1,0 +1,22 @@
+{
+  "name": "ecs-game-engine",
+  "version": "1.0.0",
+  "description": "Custom ECS game engine built with vanilla JavaScript",
+  "main": "game/main.js",
+  "type": "module",
+  "scripts": {
+    "dev": "npx live-server --port=8080",
+    "build": "echo 'No build step required for vanilla JS'"
+  },
+  "keywords": [
+    "ecs",
+    "game-engine",
+    "javascript",
+    "canvas"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}
