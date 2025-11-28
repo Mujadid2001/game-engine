@@ -1,22 +1,52 @@
 {
   "name": "ecs-game-engine",
-  "version": "1.0.0",
-  "description": "Custom ECS game engine built with vanilla JavaScript",
+  "version": "2.0.0",
+  "description": "Professional Entity-Component-System game engine built with pure JavaScript ES6+",
   "main": "game/main.js",
   "type": "module",
   "scripts": {
-    "dev": "npx live-server --port=8080",
-    "build": "echo 'No build step required for vanilla JS'"
+    "dev": "npx live-server --port=8080 --open=/index.html",
+    "start": "npx live-server --port=8080 --open=/index.html",
+    "preview": "python -m http.server 8080",
+    "build": "echo 'No build step required - pure vanilla JavaScript!'"
   },
   "keywords": [
     "ecs",
     "game-engine",
     "javascript",
-    "canvas"
+    "canvas",
+    "2d-game",
+    "entity-component-system",
+    "game-development",
+    "pure-javascript",
+    "no-dependencies"
   ],
-  "author": "",
+  "author": "Your Name",
   "license": "MIT",
   "devDependencies": {
     "live-server": "^1.2.2"
-  }
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/game-engine"
+  },
+  "features": [
+    "⚡ Ultra-fast ECS architecture with bitmask filtering",
+    "🎨 Advanced Canvas 2D renderer",
+    "📷 Camera system with follow, shake & zoom",
+    "💥 Particle system for visual effects",
+    "🎯 Smart collision detection & physics",
+    "🎬 Frame-based animation system",
+    "🎮 Complete input handling (keyboard & mouse)",
+    "🔊 Spatial audio system",
+    "🗺️ Tilemap rendering support",
+    "🤖 State machines for AI",
+    "🎨 Trail rendering effects",
+    "💊 Health system with invulnerability",
+    "🎪 Scene management",
+    "📦 Asset loading with progress"
+  ]
 }

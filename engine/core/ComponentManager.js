@@ -11,6 +11,9 @@ export class ComponentManager {
       this.componentTypes.set(typeName, this.nextComponentId++);
       this.componentArrays.set(typeName, new Map());
     }
+    else {
+        console.warn(`Component ${typeName} is already registered.`);
+    }
   }
 
   getComponentType(componentClass) {

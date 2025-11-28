@@ -7,11 +7,16 @@ export class Time {
     this.frameCount = 0;
     this.fpsUpdateInterval = 1000;
     this.lastFpsUpdate = 0;
+    this.timeScale = 1.0;
+    this.maxDeltaTime = 0.1; // Cap delta to prevent spiral of death
   }
 
   update(currentTime) {
-    this.deltaTime = (currentTime - this.lastTime) / 1000;
+    const rawDelta = (currentTime - this.lastTime) / 1000;
     this.lastTime = currentTime;
+    
+    // Cap delta time and apply time scale
+    this.deltaTime = Math.min(rawDelta, this.maxDeltaTime) * this.timeScale;
     this.elapsed += this.deltaTime;
 
     // Calculate FPS
@@ -33,5 +38,22 @@ export class Time {
 
   getFPS() {
     return this.fps;
+  }
+
+  setTimeScale(scale) {
+    this.timeScale = Math.max(0, scale);
+  }
+
+  pause() {
+    this.timeScale = 0;
+  }
+
+  resume() {
+    this.timeScale = 1.0;
+  }
+
+  reset() {
+    this.elapsed = 0;
+    this.frameCount = 0;
   }
 }
