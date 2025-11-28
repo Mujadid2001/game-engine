@@ -15,6 +15,8 @@ import { StateMachine } from '../engine/components/StateMachine.js';
 import { Text } from '../engine/components/Text.js';
 import { Button } from '../engine/components/Button.js';
 import { Trail } from '../engine/components/Trail.js';
+import { Tilemap } from '../engine/components/Tilemap.js';
+import { AudioSource } from '../engine/components/AudioSource.js';
 
 // Import all systems
 import { MovementSystem } from '../engine/systems/MovementSystem.js';
@@ -29,10 +31,16 @@ import { HealthSystem } from '../engine/systems/HealthSystem.js';
 import { StateMachineSystem } from '../engine/systems/StateMachineSystem.js';
 import { UISystem } from '../engine/systems/UISystem.js';
 import { TrailSystem } from '../engine/systems/TrailSystem.js';
+import { TilemapSystem } from '../engine/systems/TilemapSystem.js';
+import { AudioSystem } from '../engine/systems/AudioSystem.js';
 
 // Import scenes
 import { GameScene } from './scenes/GameScene.js';
 import { MainMenuScene } from './scenes/MainMenuScene.js';
+import { GameOverScene } from './scenes/GameOverScene.js';
+import { TutorialScene } from './scenes/TutorialScene.js';
+import { WinScene } from './scenes/WinScene.js';
+import { AdvancedDemoScene } from './scenes/AdvancedDemoScene.js';
 
 // Initialize Engine
 const engine = new Engine('gameCanvas', {
@@ -44,6 +52,9 @@ const engine = new Engine('gameCanvas', {
 });
 
 async function main() {
+  console.log('🎮 Initializing ECS Game Engine...');
+  console.log('📦 Loading components and systems...');
+
   // Register all components
   engine.registerComponent(Position);
   engine.registerComponent(Velocity);
@@ -59,11 +70,17 @@ async function main() {
   engine.registerComponent(Text);
   engine.registerComponent(Button);
   engine.registerComponent(Trail);
+  engine.registerComponent(Tilemap);
+  engine.registerComponent(AudioSource);
+
+  console.log('✅ Components registered:', 16);
 
   // Add systems (order matters!)
   const inputSystem = new InputSystem(engine.canvas);
   const cameraSystem = new CameraSystem(engine.canvas);
   const renderSystem = new RenderSystem(engine.renderer);
+  const audioSystem = new AudioSystem();
+  const tilemapSystem = new TilemapSystem();
   
   engine.addSystem(inputSystem);
   engine.addSystem(new UISystem(engine.canvas));
@@ -76,14 +93,56 @@ async function main() {
   engine.addSystem(cameraSystem);
   engine.addSystem(new ParticleSystem());
   engine.addSystem(new TrailSystem());
+  engine.addSystem(audioSystem);
+  engine.addSystem(tilemapSystem);
   engine.addSystem(renderSystem);
+
+  console.log('✅ Systems initialized:', 14);
 
   // Add scenes
   engine.sceneManager.addScene('menu', new MainMenuScene());
+  engine.sceneManager.addScene('tutorial', new TutorialScene());
   engine.sceneManager.addScene('game', new GameScene());
+  engine.sceneManager.addScene('demo', new AdvancedDemoScene());
+  engine.sceneManager.addScene('gameover', new GameOverScene());
+  engine.sceneManager.addScene('win', new WinScene());
+
+  console.log('✅ Scenes loaded:', 6);
 
   // Initialize and start
   await engine.init();
+  
+  console.log('🎮 Engine initialization complete!');
+  console.log('');
+  console.log('='.repeat(60));
+  console.log('🎮 ECS GAME ENGINE - DEMO');
+  console.log('='.repeat(60));
+  console.log('');
+  console.log('FEATURES:');
+  console.log('  ⚡ Ultra-Fast ECS Architecture with Bitmask Filtering');
+  console.log('  🎨 Advanced Canvas 2D Renderer');
+  console.log('  📷 Camera System (Follow, Shake, Zoom)');
+  console.log('  💥 Particle Effects & Visual Trails');
+  console.log('  🎯 Smart Collision Detection & Response');
+  console.log('  🎬 Animation System');
+  console.log('  🎮 Complete Input Handling');
+  console.log('  🤖 State Machines for AI');
+  console.log('  ❤️ Health System');
+  console.log('  🖱️ Interactive UI Components');
+  console.log('');
+  console.log('CONTROLS:');
+  console.log('  WASD or Arrow Keys - Move Player');
+  console.log('  Space - Jump');
+  console.log('  Mouse Click - Shoot');
+  console.log('  Click UI Buttons - Navigate');
+  console.log('');
+  console.log('GAME OBJECTIVE:');
+  console.log('  ⭐ Collect all yellow stars');
+  console.log('  ❌ Avoid red enemies');
+  console.log('  💚 Don\'t lose all your health!');
+  console.log('');
+  console.log('='.repeat(60));
+  console.log('');
   
   // Load main menu
   engine.loadScene('menu');
@@ -91,13 +150,18 @@ async function main() {
   // Start the engine
   engine.start();
 
-  console.log('🎮 Game is running!');
-  console.log('Controls:');
-  console.log('  WASD or Arrow Keys - Move');
-  console.log('  Space - Jump');
-  console.log('  Click - Shoot');
+  console.log('▶️  Game is now running!');
+  console.log('👆 Click "START GAME" in the menu to begin!');
+  console.log('');
+
+  // Make engine globally accessible for debugging
+  window.gameEngine = engine;
+  console.log('💡 Tip: Access engine via window.gameEngine for debugging');
 }
 
 // Start the game
-main().catch(console.error);
+main().catch(error => {
+  console.error('❌ Failed to start game:', error);
+  console.error('Stack trace:', error.stack);
+});
 

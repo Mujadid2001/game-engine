@@ -11,6 +11,7 @@ import { Text } from '../../engine/components/Text.js';
 import { Trail } from '../../engine/components/Trail.js';
 import { ParticleEmitter } from '../../engine/components/ParticleEmitter.js';
 import { StateMachine } from '../../engine/components/StateMachine.js';
+import { soundGenerator } from '../assets/assets.js';
 
 export class GameScene extends Scene {
   constructor() {
@@ -19,6 +20,7 @@ export class GameScene extends Scene {
     this.score = 0;
     this.scoreText = null;
     this.enemies = [];
+    this.soundGen = soundGenerator;
   }
 
   onCreate() {
@@ -115,6 +117,7 @@ export class GameScene extends Scene {
     const health = new Health(3);
     health.onDamage = (amount) => {
       console.log(`Player took ${amount} damage!`);
+      this.soundGen.playHit();
       const camera = this.engine.getSystem('CameraSystem').getMainCamera();
       if (camera) camera.shakeCam(10, 0.3);
     };
@@ -240,6 +243,7 @@ export class GameScene extends Scene {
           // Collect!
           this.score += 100;
           this.updateScore();
+          this.soundGen.playCollect();
           
           // Create particle burst
           const particleEntity = this.createEntity();
@@ -319,6 +323,9 @@ export class GameScene extends Scene {
       const sprite = new Sprite('#00ffff', 8, 8);
       sprite.zIndex = 8;
       this.addComponent(bullet, sprite);
+      
+      // Play shoot sound
+      this.soundGen.playShoot();
       
       console.log('💥 Pew!');
     }
